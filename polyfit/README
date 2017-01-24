@@ -1,0 +1,65 @@
+POLYFIT V0.1                                                       Nov 1, 2008
+------------------------------------------------------------------------------
+
+1. INTRODUCTION
+
+Polyfit is a polynomial chain fitting tool developed to pre-process eclipsing
+binary (EB) light curves and get them ready for the artificial intelligence
+based engine EBAI. The code is released under GNU General Public License,
+which allows you to freely use, share and modify the code. For the details
+on the computational logic of the code please refer to Prsa et al. (2008),
+ApJ 687, 542.
+
+2. COMPILING
+
+To compile polyfit, you must be running a GNU-compatible build system. This
+means that polyfit will build readily on any linux platform; the code should
+be readily portable to other platforms, but we have not tested this yet. Any
+success reports would be greatly appreciated!
+
+Polyfit depends on the GNU Scientific Library (GSL), although this dependency
+will be removed in the upcoming version. Any C compiler, such as gcc, should
+compile the code without any problems.
+
+To build polyfit, modify Makefile to your liking and issue `make`. That will
+create the polyfit executable.
+
+To install polyfit, copy the executable to /usr/local/bin or any alternative
+directory in the bin path.
+
+3. USAGE
+
+Polyfit is run on light curves. The input file can either contain 1 column
+(equidistant fluxes), 2 columns (phase and flux), or three columns (phase,
+flux and standard deviation). You can additionally pass the following switches
+to polyfit:
+
+  -o order          ..  fitting polynomial order (default: 2)
+  -i iters          ..  number of iterations (default: 10000)
+  -s step           ..  step for random knot displacement (default: 0.01)
+  -k k1 k2 ... kN   ..  explicit list of knots
+  --find-knots      ..  attempt to find knots automatically
+  --find-step       ..  attempt to find step automatically
+  --chain-length    ..  minimum chain length for automatic knot search
+  --ann-compatible  ..  make output ANN-compatible
+
+The best way to get started is to use the demo input file 'lc.dat'. Invoke
+polyfit with:
+
+	polyfit --find-knots -s 0.005 lc.dat > lc.out
+
+This will compute a theoretical curve that consists of 4 segments, each fit
+with a quadratic function. You may want to display it along with the data.
+In gnuplot, for example, you might do:
+
+	plot 'lc.dat', 'lc.out' with lines
+
+4. CONTACT
+
+For any problems/suggestions using polyfit, please contact Andrej Prsa via
+e-mail:
+
+	andrej.prsa@villanova.edu
+
+I will do my best to help you in the shortest time possible.
+
